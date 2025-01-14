@@ -1,0 +1,118 @@
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-white">
+  <div class="container mx-auto px-4 py-6 relative">
+    <!-- Floating Shapes Background -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
+      <div class="floating-shape bg-primary/20 top-10 left-10"></div>
+      <div class="floating-shape bg-secondary/20 bottom-20 right-10"></div>
+      <div class="floating-shape bg-accent/20 top-40 right-20"></div>
+    </div>
+
+    <!-- Header with Impact Stats -->
+    <div class="text-center mb-6 relative">
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">
+        Help Save Lives 
+        <span class="text-primary">♥</span>
+      </h1>
+      <div class="flex justify-center gap-6 text-sm mt-3">
+        <div class="stat-pill">
+          <span class="font-bold text-primary">150+</span>
+          <span class="text-gray-600">Lives Saved</span>
+        </div>
+        <div class="stat-pill">
+          <span class="font-bold text-primary">₹2L+</span>
+          <span class="text-gray-600">Raised</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Donation Card -->
+    <div class="donation-card max-w-md mx-auto">
+      <!-- Amount Selection with Better Visual Feedback -->
+      <div class="amount-grid mb-4">
+        <button *ngFor="let option of donationOptions"
+                [class]="getAmountButtonClass(option.amount)"
+                (click)="selectAmount(option.amount)">
+          <span class="amount-label">{{ option.label }}</span>
+          <div class="amount-highlight"></div>
+        </button>
+      </div>
+
+      <!-- Styled Custom Amount Input -->
+      <div class="custom-amount-wrapper mb-4">
+        <span class="currency-symbol">₹</span>
+        <input type="number"
+               placeholder="Enter custom amount"
+               [class]="getCustomAmountClass()"
+               [value]="customAmount || ''"
+               (input)="setCustomAmount($event)">
+      </div>
+
+      <!-- Enhanced Donation Type Toggle -->
+      <div class="donation-type-toggle mb-4">
+        <button *ngFor="let type of donationTypes"
+                [class]="getDonationTypeClass(type)"
+                (click)="setDonationType(type)">
+          <i [class]="getDonationTypeIcon(type)"></i>
+          <span>{{type}}</span>
+          <div class="type-highlight"></div>
+        </button>
+      </div>
+
+      <!-- Styled Form Fields -->
+      <div class="space-y-3">
+        <div class="form-group" *ngFor="let field of donorFields">
+          <div class="input-wrapper">
+            <i [class]="field.icon + ' input-icon'"></i>
+            <input [type]="field.type"
+                   [placeholder]="field.placeholder"
+                   [(ngModel)]="field.value"
+                   class="form-input">
+            <div class="input-highlight"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attractive Donate Button -->
+      <button class="donate-button"
+              [disabled]="!isFormValid()"
+              (click)="handleDonation()">
+        <span class="button-content">
+          <i class="fas fa-heart animate-pulse"></i>
+          <span>Donate {{ getCurrentAmount() | currency:'INR' }}</span>
+        </span>
+        <div class="button-shine"></div>
+      </button>
+
+      <!-- Trust Indicators with Animation -->
+      <div class="trust-indicators">
+        <div class="trust-card" *ngFor="let trust of trustIndicators; let i = index">
+          <div class="trust-icon-wrapper" [attr.data-delay]="i * 100">
+            <i [class]="trust.icon"></i>
+          </div>
+          <span class="trust-text">{{trust.text}}</span>
+        </div>
+      </div>
+
+      <!-- Payment Methods with Better Styling -->
+      <div class="payment-methods">
+        <div class="payment-divider">
+          <span>Secure Payment Options</span>
+        </div>
+        <div class="payment-icons">
+          <div class="payment-icon" *ngFor="let method of ['upi', 'cards', 'netbanking']">
+            <img [src]="'assets/payment/' + method + '.svg'" 
+                 [alt]="method"
+                 class="payment-img">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Badge -->
+    <div class="security-badge">
+      <i class="fas fa-shield-alt"></i>
+      <span>256-bit Secure Donations</span>
+    </div>
+  </div>
+<app-navbar></app-navbar>
+</div>
