@@ -96,6 +96,7 @@ class UserService {
         'refresh',
         '14d'
       );
+      
       return {
         status: 200,
         message: 'OTP verified successfully, user is now verified',
